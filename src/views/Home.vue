@@ -1,21 +1,26 @@
 <template>
-  <div class="home">Home</div>
-  <p>My name is {{ name }} and my age is {{ age }}</p>
-  <button @click="handleClick">Click me</button>
+  <div class="home">
+    <h1>Home</h1>
+    <p ref="p">My name is {{ name }} and my age is {{ age }}</p>
+    <button @click="handleClick">click me</button>
+  </div>
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
   name: "Home",
-  components: {},
   setup() {
     let name = "Hekla";
     let age = 21;
-    const handleClick = () => {
-      console.log("you clicked me");
+    const p = ref(null);
+    const handleClick = (e) => {
+      console.log(p, p.value);
+      p.value.classList.add("test");
+      p.value.textContent = "hello";
     };
-
-    return { name, age, handleClick };
+    console.log(p.value);
+    return { name, age, handleClick, p };
   },
 };
 </script>
