@@ -1,12 +1,12 @@
 <template>
-  <div class="form">
-    <form>
-      <label>Title</label>
+  <div class="create">
+    <form @submit.prevent="handleSubmit">
+      <label>Title:</label>
       <input v-model="title" type="text" required />
       <label>Content:</label>
       <textarea v-model="body" required></textarea>
-      <label>Tags (hit enter to add)</label>
-      <input v-model="tag" type="text" @keydown.enter.prevent="handleKeydown" />
+      <label>Tags (hit enter to add a tag):</label>
+      <input @keydown.enter.prevent="handleKeydown" v-model="tag" type="text" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
       <button>Add Post</button>
     </form>
@@ -19,20 +19,29 @@ export default {
   setup() {
     const title = ref("");
     const body = ref("");
-    const tag = ref("");
     const tags = ref([]);
-
+    const tag = ref("");
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
-        //removes all white space
-        tag.value = tag.value.replace(/\s/, "");
-        // adding a tag
+        tag.value = tag.value.replace(/\s/g, ""); // remove all whitespace
         tags.value.push(tag.value);
       }
       tag.value = "";
     };
-
-    return { title, body, tag, handleKeydown, tags };
+    const handleSubmit = async () => {
+      const post = {
+        id: Math.floor(Math.random() * 10000),
+        title: title.value,
+        body: body.value,
+        tags: tags.value,
+      };
+      await fetch("http://localhost:3000/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post),
+      });
+    };
+    return { body, title, tags, tag, handleKeydown, handleSubmit };
   },
 };
 </script>
