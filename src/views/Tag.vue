@@ -1,7 +1,7 @@
 <template>
   <div class="tag">
     <div v-if="error">{{ error }}</div>
-    <div v-if="posts.length">
+    <div v-if="posts.length" class="layout">
       <PostList :posts="postsWithTag" />
     </div>
     <div v-else>
