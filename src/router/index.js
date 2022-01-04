@@ -19,7 +19,6 @@ const routes = [
     path: "/create",
     name: "Create",
     component: Create,
-    props: true,
   },
 ];
 
