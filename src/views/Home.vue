@@ -3,6 +3,8 @@
     <h1>Home</h1>
     <p ref="p">My name is {{ name }} and my age is {{ age }}</p>
     <button @click="handleClick">click me</button>
+    <button @click="age++">Update age by 1</button>
+    <input type="text" v-model="name" />
   </div>
 </template>
 
@@ -11,16 +13,20 @@ import { ref } from "vue";
 export default {
   name: "Home",
   setup() {
-    let name = "Hekla";
-    let age = 21;
-    const p = ref(null);
+    // When surrounding values with refs you make them reactive
+    const name = ref("Hekla");
+    const age = ref(21);
+    // const p = ref(null)
     const handleClick = (e) => {
-      console.log(p, p.value);
-      p.value.classList.add("test");
-      p.value.textContent = "hello";
+      name.value = "luigi";
+      age.value = 35;
     };
-    console.log(p.value);
-    return { name, age, handleClick, p };
+    return { name, age, handleClick };
+  },
+  data() {
+    return {
+      score: 5,
+    };
   },
 };
 </script>
