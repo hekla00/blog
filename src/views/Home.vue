@@ -1,27 +1,32 @@
 <template>
   <div class="home">
     <h1>Home</h1>
-    <p ref="p">My name is {{ name }} and my age is {{ age }}</p>
-    <button @click="handleClick">click me</button>
-    <button @click="age++">Update age by 1</button>
-    <input type="text" v-model="name" />
+    <h2>Refs</h2>
+    <p>{{ userOne.name }} - {{ userOne.age }}</p>
+    <button @click="updateUserOne">Update User One</button>
+    <h2>Reactive</h2>
+    <p>{{ userTwo.name }} - {{ userTwo.age }}</p>
+    <button @click="updateUserTwo">Update User Two</button>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 export default {
   name: "Home",
   setup() {
     // When surrounding values with refs you make them reactive
-    const name = ref("Hekla");
-    const age = ref(21);
-    // const p = ref(null)
-    const handleClick = (e) => {
-      name.value = "luigi";
-      age.value = 35;
+    const userOne = ref({ name: "Hekla", age: 21 });
+    // UserTwo is using reactive instead of using refs
+    const userTwo = reactive({ name: "Emma", age: 34 });
+
+    const updateUserOne = () => {
+      userOne.value.age = 25;
     };
-    return { name, age, handleClick };
+    const updateUserTwo = () => {
+      userTwo.age = 38;
+    };
+    return { userOne, updateUserOne, userTwo, updateUserTwo };
   },
   data() {
     return {
