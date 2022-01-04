@@ -15,12 +15,17 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
   setup() {
     const title = ref("");
     const body = ref("");
     const tags = ref([]);
     const tag = ref("");
+
+    const router = useRouter();
+
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\s/g, ""); // remove all whitespace
@@ -40,6 +45,7 @@ export default {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(post),
       });
+      router.push({ name: "Home" });
     };
     return { body, title, tags, tag, handleKeydown, handleSubmit };
   },
@@ -77,7 +83,7 @@ label::before {
   display: block;
   width: 100%;
   height: 100%;
-  background: #ff8800;
+  background: #cfc4b6;
   position: absolute;
   z-index: -1;
   padding-right: 40px;
@@ -87,7 +93,7 @@ label::before {
 button {
   display: block;
   margin-top: 30px;
-  background: #ff8800;
+  background: #cfc4b6;
   color: white;
   border: none;
   padding: 8px 16px;
