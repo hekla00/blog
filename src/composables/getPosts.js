@@ -8,7 +8,10 @@ const getPosts = () => {
   const load = async () => {
     try {
       // connect to a collection and retrieve the documents
-      const res = await projectFirestore.collection("posts").get();
+      const res = await projectFirestore
+        .collection("posts")
+        .orderBy("createdAt", "desc")
+        .get();
       // cycle through the documents and map them to a new array where
       // each item in the array represents a single post
       // contains the data from the document and the id as well
